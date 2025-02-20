@@ -10,17 +10,17 @@
 
         #world {
             position: absolute;
-            width: 5000px;  /* Grande zone pour se déplacer */
+            width: 5000px;  
             height: 5000px;
             display: flex;
-            flex-wrap: wrap;  /* Pour que les éléments s'organisent automatiquement */
+            flex-wrap: wrap;  /* organisation auto des elts */
         }
 
         .item {
             position: absolute;
             width: 234px;
             height: 190px;
-            margin: 150px;  /* Espace entre les éléments */
+            margin: 150px;  /* gouttières */
             cursor: pointer;
             transition: transform 0.2s ease-in-out;
         }
@@ -37,15 +37,15 @@
 </head>
 <body>
 
-    <div id="world"></div> <!-- Espace infini -->
+    <div id="world"></div> <!-- espace infini -->
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const world = document.getElementById("world");
 
-            // Données des médias (ajoute tes propres liens ici)
+            // médias
             const media = [
-                ///{ type: "gif", src: "https://files.catbox.moe/1td8tm.gif" },
+                ///{ type: "gif", src: "" },
                 { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/bleu.gif" },
                 { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/nouvel_ep.gif" },
                 { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/nouvel_ep.gif" },
@@ -59,12 +59,12 @@
                 { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/violet.gif" },
             ];
 
-            const columns = 25;  // Nombre de colonnes dans l'espace
-            const rows = 25;  // Nombre de rangées dans l'espace
-            const itemWidth = 250;  // Largeur de chaque élément (incluant la marge)
-            const itemHeight = 250;  // Hauteur de chaque élément (incluant la marge)
+            const columns = 25;  // nb colonnes
+            const rows = 25;  // nb rangées
+            const itemWidth = 250;  // largeur (incluant la marge)
+            const itemHeight = 250;  // hauteur (incluant la marge)
 
-            // Ajouter des éléments dans une grille, pas aléatoirement
+            // placement des éléments dans une grille
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < columns; col++) {
                     const data = media[Math.floor(Math.random() * media.length)];
@@ -73,7 +73,7 @@
                     element.src = data.src;
                     element.classList.add("item");
                     if (data.type === "video") {
-                        element.setAttribute("controls", "true"); // Active les contrôles pour la vidéo
+                        element.setAttribute("controls", "true"); // contrôles pour la vidéo
                     }
 
                     // Positionner chaque élément dans la grille
@@ -84,7 +84,7 @@
                 }
             }
 
-            // Déplacement infini avec la souris
+            // déplacement infini avec la souris
             let isDragging = false, startX, startY, scrollLeft, scrollTop;
 
             document.body.addEventListener("mousedown", (e) => {
@@ -107,8 +107,7 @@
                 isDragging = false;
                 document.body.style.cursor = "grab";
             });
-
-            // Centrer la vue au départ
+            
             window.scrollTo(2500, 2500);
         });
     </script>
