@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploration infinie</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow: hidden; background: #000; cursor: grab; }
+
+        #world {
+            position: absolute;
+            width: 5000px;  /* Grande zone pour se déplacer */
+            height: 5000px;
+            display: flex;
+            flex-wrap: wrap;  /* Pour que les éléments s'organisent automatiquement */
+        }
+
+        .item {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            margin: 10px;  /* Espace entre les éléments */
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .item:hover {
+            transform: scale(1.1);
+        }
+
+        video { 
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="world"></div> <!-- Espace infini -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const world = document.getElementById("world");
+
+            // Données des médias (ajoute tes propres liens ici)
+            const media = [
+                ///{ type: "gif", src: "https://files.catbox.moe/1td8tm.gif" },
+                { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/bleu.gif" },
+                { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/nouvel_ep.gif" },
+                { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/nouvel_ep.gif" },
+                { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/rose.gif" },
+                { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/rouge.gif" },
+                { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/vert.gif" },
+                { type: "gif", src: "https://raw.githubusercontent.com/CatWhoMan/mes-gifs/main/violet.gif" },
+            ];
+
+            const columns = 25;  // Nombre de colonnes dans l'espace
+            const rows = 25;  // Nombre de rangées dans l'espace
+            const itemWidth = 220;  // Largeur de chaque élément (incluant la marge)
+            const itemHeight = 220;  // Hauteur de chaque élément (incluant la marge)
+
+            // Ajouter des éléments dans une grille, pas aléatoirement
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < columns; col++) {
+                    const data = media[Math.floor(Math.random() * media.length)];
+                    const element = document.createElement(data.type === "gif" ? "img" : "video");
+                    
+                    element.src = data.src;
+                    element.classList.add("item");
+                    if (data.type === "video") {
+                        element.setAttribute("controls", "true"); // Active les contrôles pour la vidéo
+                    }
+
+                    // Positionner chaque élément dans la grille
+                    element.style.left = (col * itemWidth) + "px";
+                    element.style.top = (row * itemHeight) + "px";
+
+                    world.appendChild(element);
+                }
+            }
+
+            // Déplacement infini avec la souris
+            let isDragging = false, startX, startY, scrollLeft, scrollTop;
+
+            document.body.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                document.body.style.cursor = "grabbing";
+                startX = e.clientX;
+                startY = e.clientY;
+                scrollLeft = window.scrollX;
+                scrollTop = window.scrollY;
+            });
+
+            document.body.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
+                const dx = startX - e.clientX;
+                const dy = startY - e.clientY;
+                window.scrollTo(scrollLeft + dx, scrollTop + dy);
+            });
+
+            document.body.addEventListener("mouseup", () => {
+                isDragging = false;
+                document.body.style.cursor = "grab";
+            });
+
+            // Centrer la vue au départ
+            window.scrollTo(2500, 2500);
+        });
+    </script>
+
+</body>
+</html>
